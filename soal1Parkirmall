@@ -57,10 +57,9 @@ void tampilMenu() {
 }
 
 void tambahKendaraan() {
+    // Jika parkiran sudah penuh total
     if ((int)daftarParkir.size() >= KAPASITAS_MAKS) {
-        cout << "\n========================================\n";
-        cout << "  PARKIRAN PENUH! Tidak dapat menambah kendaraan.\n";
-        cout << "========================================\n\n";
+        cout << "Maaf, parkiran hanya dapat memuat " << KAPASITAS_MAKS << " mobil !\n";
         return;
     }
 
@@ -69,16 +68,17 @@ void tambahKendaraan() {
     cin >> jumlah;
     cin.ignore();
 
-    for (int i = 0; i < jumlah; i++) {
-        if ((int)daftarParkir.size() >= KAPASITAS_MAKS) {
-            cout << "\n========================================\n";
-            cout << "  PARKIRAN PENUH! Tidak dapat menambah kendaraan lebih lanjut.\n";
-            cout << "========================================\n\n";
-            break;
-        }
+    int slotTersisa = KAPASITAS_MAKS - (int)daftarParkir.size();
 
+    // Jika jumlah yang diminta melebihi kapasitas
+    if (jumlah > slotTersisa) {
+        cout << "Maaf, parkiran hanya dapat memuat " << KAPASITAS_MAKS << " mobil.\n";
+        jumlah = slotTersisa; // tetap proses sampai slot yang tersisa
+    }
+
+    for (int i = 0; i < jumlah; i++) {
         Kendaraan* k = new Kendaraan();
-        cout << "\nMobil ke " << (i + 1) << "\n";
+        cout << "\nMobil ke " << ((int)daftarParkir.size() + 1) << "\n";
         cout << "Masukkan plat mobil  : ";
         getline(cin, k->platMobil);
         cout << "Masukkan merk mobil  : ";
@@ -181,7 +181,7 @@ int main() {
         switch (pilihan) {
             case 1: tambahKendaraan(); break;
             case 2: tampilKendaraan(); break;
-            case 3: pembayaran(); break;
+            case 3: pembayaran();      break;
             case 4:
                 cout << "\nTerima kasih, " << petugas.nama << "! Sampai jumpa.\n";
                 cout << "================================================================================\n";
