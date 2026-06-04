@@ -1,0 +1,196 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <iomanip>
+#include <ctime>
+#include <algorithm>
+
+using namespace std;
+
+// ===================== STRUCT / CLASS =====================
+
+struct Kendaraan {
+    string platMobil;
+    string merkMobil;
+    string warnaMobil;
+    time_t waktuMasuk;
+};
+
+struct Petugas {
+    string nama;
+    string id;
+};
+
+// ===================== GLOBAL VARIABEL =====================
+
+const int KAPASITAS_MAKS = 20;
+vector<Kendaraan*> daftarParkir;
+Petugas petugas;
+
+// ===================== FUNGSI =====================
+
+void tampilHeader() {
+    cout << "================================================================================\n";
+    cout << "---------------------------- S E L A M A T  D A T A N G -----------------------\n";
+    cout << "                       DI PORTAL PARKIR KHUSUS MOBIL\n";
+    cout << "                              MALL PRIENAL\n";
+    cout << "================================================================================\n\n";
+}
+
+void inputPetugas() {
+    cout << "Kami senang Anda telah hadir.\n";
+    cout << "Sebelum melanjutkan, silahkan masukkan informasi Anda yang akan bertugas hari ini.\n\n";
+    cout << "Masukkan nama : ";
+    getline(cin, petugas.nama);
+    cout << "Masukkan ID   : ";
+    getline(cin, petugas.id);
+    cout << "\n";
+}
+
+void tampilMenu() {
+    cout << "\nSilahkan input opsi berikut dalam bentuk angka.\n";
+    cout << "1. Tambahkan Daftar Kendaraan\n";
+    cout << "2. Tampilkan Daftar Kendaraan\n";
+    cout << "3. Pembayaran\n";
+    cout << "4. Keluar Program\n";
+    cout << "Masukkan opsi : ";
+}
+
+void tambahKendaraan() {
+    if ((int)daftarParkir.size() >= KAPASITAS_MAKS) {
+        cout << "\n========================================\n";
+        cout << "  PARKIRAN PENUH! Tidak dapat menambah kendaraan.\n";
+        cout << "========================================\n\n";
+        return;
+    }
+
+    int jumlah;
+    cout << "Masukan jumlah mobil yang akan di parkirkan : ";
+    cin >> jumlah;
+    cin.ignore();
+
+    for (int i = 0; i < jumlah; i++) {
+        if ((int)daftarParkir.size() >= KAPASITAS_MAKS) {
+            cout << "\n========================================\n";
+            cout << "  PARKIRAN PENUH! Tidak dapat menambah kendaraan lebih lanjut.\n";
+            cout << "========================================\n\n";
+            break;
+        }
+
+        Kendaraan* k = new Kendaraan();
+        cout << "\nMobil ke " << (i + 1) << "\n";
+        cout << "Masukkan plat mobil  : ";
+        getline(cin, k->platMobil);
+        cout << "Masukkan merk mobil  : ";
+        getline(cin, k->merkMobil);
+        cout << "Masukkan warna mobil : ";
+        getline(cin, k->warnaMobil);
+        k->waktuMasuk = time(nullptr);
+        daftarParkir.push_back(k);
+    }
+}
+
+string formatDurasi(double detikTotal) {
+    int jam   = (int)detikTotal / 3600;
+    int menit = ((int)detikTotal % 3600) / 60;
+    int detik = (int)detikTotal % 60;
+    return to_string(jam) + " jam " + to_string(menit) + " menit " + to_string(detik) + " detik";
+}
+
+void tampilKendaraan() {
+    if (daftarParkir.empty()) {
+        cout << "\nBelum ada kendaraan yang parkir.\n";
+        return;
+    }
+    cout << "\nDAFTAR MOBIL YANG SUDAH TERPARKIR :\n";
+    cout << "================================================================\n";
+    time_t sekarang = time(nullptr);
+    for (int i = 0; i < (int)daftarParkir.size(); i++) {
+        Kendaraan* k = daftarParkir[i];
+        double durasi = difftime(sekarang, k->waktuMasuk);
+        cout << "Mobil ke-" << (i + 1) << "\n";
+        cout << "Plat mobil  : " << k->platMobil  << "\n";
+        cout << "Merk mobil  : " << k->merkMobil  << "\n";
+        cout << "Warna mobil : " << k->warnaMobil << "\n";
+        cout << "Waktu parkir: " << formatDurasi(durasi) << "\n";
+        cout << "----------------------------------------------------------------\n";
+    }
+}
+
+void pembayaran() {
+    if (daftarParkir.empty()) {
+        cout << "\nBelum ada kendaraan yang parkir.\n";
+        return;
+    }
+    tampilKendaraan();
+
+    string platCari;
+    while (true) {
+        cout << "\nMasukkan plat mobil yang ingin dibayar : ";
+        getline(cin, platCari);
+
+        string platUpper = platCari;
+        transform(platUpper.begin(), platUpper.end(), platUpper.begin(), ::toupper);
+
+        Kendaraan* ditemukan = nullptr;
+        int indexDitemukan = -1;
+        for (int i = 0; i < (int)daftarParkir.size(); i++) {
+            string platParkir = daftarParkir[i]->platMobil;
+            transform(platParkir.begin(), platParkir.end(), platParkir.begin(), ::toupper);
+            if (platParkir == platUpper) {
+                ditemukan = daftarParkir[i];
+                indexDitemukan = i;
+                break;
+            }
+        }
+
+        if (ditemukan == nullptr) {
+            cout << "PLAT TIDAK DITEMUKAN !\n";
+            continue;
+        }
+
+        time_t sekarang = time(nullptr);
+        double durasi = difftime(sekarang, ditemukan->waktuMasuk);
+        double biaya  = durasi * 2.0; // Rp2 per detik
+
+        cout << "\n B I A Y A  P A R K I R : Rp" << fixed << setprecision(0) << biaya << "\n";
+        cout << "================================================================\n";
+
+        delete ditemukan;
+        daftarParkir.erase(daftarParkir.begin() + indexDitemukan);
+        break;
+    }
+}
+
+void bebaskanMemori() {
+    for (Kendaraan* k : daftarParkir) delete k;
+    daftarParkir.clear();
+}
+
+// ===================== MAIN =====================
+
+int main() {
+    tampilHeader();
+    inputPetugas();
+
+    int pilihan;
+    do {
+        tampilMenu();
+        cin >> pilihan;
+        cin.ignore();
+        switch (pilihan) {
+            case 1: tambahKendaraan(); break;
+            case 2: tampilKendaraan(); break;
+            case 3: pembayaran(); break;
+            case 4:
+                cout << "\nTerima kasih, " << petugas.nama << "! Sampai jumpa.\n";
+                cout << "================================================================================\n";
+                break;
+            default:
+                cout << "\nOpsi tidak valid. Silahkan masukkan angka 1-4.\n";
+        }
+    } while (pilihan != 4);
+
+    bebaskanMemori();
+    return 0;
+}
