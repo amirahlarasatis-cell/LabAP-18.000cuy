@@ -6,10 +6,6 @@
 #include <cctype>
 using namespace std;
 
-// ============================================================
-//  CONSTANTS & STRUCTS
-// ============================================================
-
 const int MAX_LEADERBOARD = 5;
 const int ALPHABET_SIZE   = 26;
 
@@ -25,10 +21,6 @@ struct LeaderboardEntry {
     string tingkatKesulitan;
 };
 
-// ============================================================
-//  GLOBAL VARIABLES
-// ============================================================
-
 const string bankKata[] = {
     "apel", "jeruk", "mangga", "pisang", "semangka",
     "komputer", "keyboard", "monitor", "program", "algoritma",
@@ -40,10 +32,6 @@ const int JUMLAH_KATA = 25;
 
 LeaderboardEntry leaderboard[MAX_LEADERBOARD];
 int              jumlahLeaderboard = 0;
-
-// ============================================================
-//  UTILITY
-// ============================================================
 
 void bersihkanLayar() {
 #ifdef _WIN32
@@ -75,10 +63,6 @@ string pilihKataAcak() {
     return bankKata[rand() % JUMLAH_KATA];
 }
 
-// ============================================================
-//  GAME STATE (Pointer)
-// ============================================================
-
 void inisialisasiGame(KataGame* game, const string& kata, int maxNyawa) {
     game->kataAsli      = kata;
     game->sisaNyawa     = maxNyawa;
@@ -105,10 +89,6 @@ bool prosesTobakan(KataGame* game, char tebakanSalah[], int* jumlahSalah, char h
 bool cekKataSelesai(const KataGame* game) {
     return game->statusTebakan == game->kataAsli;
 }
-
-// ============================================================
-//  DISPLAY
-// ============================================================
 
 void tampilkanHangman(int nyawaHilang, int maxNyawa) {
     int stage = (nyawaHilang * 6 + maxNyawa - 1) / maxNyawa;
@@ -146,10 +126,6 @@ void tampilkanStatus(const KataGame* game, const char tebakanSalah[],
     cout << endl << endl;
 }
 
-// ============================================================
-//  VALIDATION & HINT
-// ============================================================
-
 bool hurufSudahDitebak(char huruf, const KataGame* game,
                         const char tebakanSalah[], int jumlahSalah) {
     huruf = tolower(huruf);
@@ -182,10 +158,6 @@ void gunakanPetunjuk(KataGame* game) {
             game->statusTebakan[i] = hurufPertama;
     cout << "Petunjuk: huruf '" << hurufPertama << "' telah dibuka! (-1 nyawa)" << endl;
 }
-
-// ============================================================
-//  SCORE & LEADERBOARD
-// ============================================================
 
 int hitungSkor(int tingkat, int sisaNyawa) {
     int base = 0;
@@ -236,10 +208,6 @@ void tampilkanLeaderboard() {
     }
     cout << "============================================" << endl;
 }
-
-// ============================================================
-//  INPUT
-// ============================================================
 
 int pilihTingkatKesulitan() {
     int pilihan = 0;
