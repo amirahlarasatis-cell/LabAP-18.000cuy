@@ -6,9 +6,13 @@ Wann Azzahra Putri Zalfi 251401092
 Dzaki Haikal 251401050 
 Mayong Aditya 251401125
 
-Contribusi dan Pembagian tugas:
+Kontribusi dan Pembagian tugas:
 Amirah --> (soal 1 & 3)
 Mella --> (soal 2)
-Wan Azzahra --> (soal 
-Dzaki
-mayong--
+Wan Azzahra --> (soal 4)
+Dzaki Haikal -->(Soal 5)
+mayong --> (soal 5)
+
+Penjelasan Tugas video
+Soal 1: Wan, Mela, Amirah.
+Soal 3: Mayong, Dzaki Haikal.
