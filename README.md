@@ -5,3 +5,10 @@ Amirah Larasati Sitorus 251401056
 Wann Azzahra Putri Zalfi 251401092
 Dzaki Haikal 251401050 
 Mayong Aditya 251401125
+
+Contribusi dan Pembagian tugas:
+Amirah --> (soal 1 & 3)
+Mella --> (soal 2)
+Wan Azzahra --> (soal 
+Dzaki
+mayong--
