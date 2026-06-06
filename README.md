@@ -1,5 +1,5 @@
 # LabAP-18.000cuy
-Kelompok Lab AP 18.000cuy:
+Anggota:
 Mella Vonia 251401005
 Amirah Larasati Sitorus 251401056
 Wann Azzahra Putri Zalfi 251401092
@@ -16,3 +16,5 @@ mayong --> (soal 5)
 Penjelasan Tugas video
 Soal 1: Wan, Mela, Amirah.
 Soal 3: Mayong, Dzaki Haikal.
+
+Link Video Presentasi: https://youtu.be/B5PgMY80gdg?si=VJ84URWvg3v_mPR8
