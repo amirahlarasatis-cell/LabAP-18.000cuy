@@ -3,5 +3,5 @@ Kelompok Lab AP 18.000cuy:
 Mella Vonia 251401005
 Amirah Larasati Sitorus 251401056
 Wann Azzahra Putri Zalfi 251401092
-Mayong
-Haikal
+Dzaki Haikal 251401050 
+Mayong Aditya 251401125
